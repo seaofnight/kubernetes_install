@@ -1,0 +1,20 @@
+Payload Size 는 1680byte 
+건수는 10000건 
+* 비고 Ingress 의 Ip 정보가 없음 
+* Sync Async 모두 지원 
+* Http 기준(No tls)
+
+* Sync 
+10000 elapsed...12.795001... tps=781.555255
+* Async 
+10000 elapsed...1.087600... tps=9194.552697
+
+TODO 
+istio 의 Traffic 의 Route LB 기능 테스트 
+
+
+다음 테스트 목록 
+1. Istio 기반의 Traffic Route : 
+ - 트래픽 분할 
+ - 트래픽 부하분산 
+  * Connection 별 LB 는 확인 하였으며 

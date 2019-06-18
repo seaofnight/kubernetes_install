@@ -1,0 +1,119 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: sample-deploy
+spec:
+    replicas: 1
+    selector:
+      matchLabels:
+          app: sample
+    template:
+      metadata:
+        labels:
+            app: sample
+      spec:
+          containers:
+            - name:  sample
+              image: registry.gitlab.com/yjkim_ntels/kubernetes-stress-test/sample:latest
+              ports:
+              - containerPort: 20000
+                name: web-port
+              livenessProbe:
+                tcpSocket:
+                  port: 20000
+                initialDelaySeconds: 3
+                periodSeconds: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: sample-svc
+spec:
+    ports:
+    - port: 20000
+      protocol: TCP
+      targetPort: web-port
+    selector:
+        app: sample
+    type: NodePort
+---
+/usr/local/share/curl/7.61.0/bin/curl -m 4  \
+    -X "POST" \
+    -v "http://192.168.11.201:20000/test/test" \
+    -H "Accept: application/json"  \
+    -H "ContentType: application/json" \
+    -H "Expect:" \
+    --http2 \
+    --data-ascii "@af_crt.json"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: sample-gateway
+  namespaces: default
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 20000
+      name: http222
+      protocol: HTTP2
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: sample
+  namespaces: default
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - sample-gateway
+  http:
+  - match:
+    - uri:
+        exact: /test/test
+    - uri:
+        exact: /login
+    - uri:
+        exact: /logout
+    - uri:
+        prefix: /api/v1/products
+    route:
+    - destination:
+        host: sample-svc
+        port:
+          number: 20000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: sample-deploy-v1
+	version: v1
+spec:
+    replicas: 1
+    selector:
+      matchLabels:
+          app: sample
+    template:
+      metadata:
+        labels:
+            app: sample
+      spec:
+          containers:
+            - name:  sample
+              image: registry.gitlab.com/yjkim_ntels/kubernetes-stress-test/sample:latest
+              ports:
+              - containerPort: 20000
+                name: web-port
+              livenessProbe:
+                tcpSocket:
+                  port: 20000
+                initialDelaySeconds: 3
+                periodSeconds: 3
+

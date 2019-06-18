@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: sample-deploy
+spec:
+    replicas: 2
+    selector:
+      matchLabels:
+          app: sample
+    template:
+      metadata:
+        labels:
+            app: sample
+      spec:
+          containers:
+            - name:  sample
+              image: registry.gitlab.com/yjkim_ntels/kubernetes-stress-test/sample:latest
+              ports:
+              - containerPort: 20000
+                name: web-port
+              livenessProbe:
+                tcpSocket:
+                  port: 20000
+                initialDelaySeconds: 3
+                periodSeconds: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: sample-svc
+spec:
+    ports:
+    - port: 20000
+      protocol: TCP
+      targetPort: web-port
+    selector:
+        app: sample
+    type: NodePort
+---

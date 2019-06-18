@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox-20
+  annotations:
+    #v1.multus-cni.io/default-network: kube-system/20-calico
+    k8s.v1.cni.cncf.io/networks: 20-calico
+spec:
+  containers:
+  - image: busybox
+    command:
+      - sleep
+      - "3600"
+    imagePullPolicy: IfNotPresent
+    name: busybox
+  restartPolicy: Always
+---
