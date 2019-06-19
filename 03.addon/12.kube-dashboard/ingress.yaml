@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dashboard-google
+  namespace: kube-system
+  annotations:
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  tls:
+    - hosts:
+      - kube.mydomain.com
+      secretName: tls-secret
+  rules:
+    - host: kube.mydomain.com
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: kubernetes-dashboard
+            servicePort: 443
