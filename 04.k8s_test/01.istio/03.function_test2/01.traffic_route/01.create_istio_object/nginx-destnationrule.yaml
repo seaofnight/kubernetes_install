@@ -1,10 +1,13 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: nginx1
+  name: nginx
 spec:
-  host: nginx1
+  host: nginx
   subsets:
-  - name: num1
+  - name: num0
+    labels:
+      postnum: "0"
+  - name: v2
     labels:
       postnum: "1"

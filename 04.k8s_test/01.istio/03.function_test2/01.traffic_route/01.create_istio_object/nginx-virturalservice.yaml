@@ -1,17 +1,13 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: nginx1
+  name: nginx
 spec:
   hosts:
-  - nginx-1
-  gateways:
-  - nginx-gateway
+    - nginx
   http:
-  - match:
-    - url:
-      prefix: /test/
-    route:
+  - route:
     - destination:
         host: nginx
-        subset: num1
+        subset: num0
+
