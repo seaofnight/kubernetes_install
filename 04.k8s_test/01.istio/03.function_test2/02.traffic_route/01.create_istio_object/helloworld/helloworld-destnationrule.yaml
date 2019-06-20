@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: helloworld
+spec:
+  host: helloworld
+  subsets:
+  - name: num0
+    labels:
+      postnum: "0"
+  - name: num1
+    labels:
+      postnum: "1"
