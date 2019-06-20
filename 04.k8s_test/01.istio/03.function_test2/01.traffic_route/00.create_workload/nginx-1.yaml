@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: nginx-1
+  labels:
+   postnum: "1"
+   app: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+      postnum: "1"
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: nginx
+        postnum: "1"
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+    postnum: "1"
+  name: nginx-1
+  namespace: default
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx
+    postnum: "1"
+  sessionAffinity: None
+  type: ClusterIP
+---
