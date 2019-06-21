@@ -4,9 +4,9 @@ function append_hosts_info(){
 cat << EOF >> /etc/hosts
 
 # kubernetes nodes
-10.0.3.2 node0
-10.0.3.3 node1
-10.0.3.4 node2
+10.0.3.2 k8s-master
+10.0.3.3 k8s-worker1
+10.0.3.4 k8s-worker2
 EOF
 }
 

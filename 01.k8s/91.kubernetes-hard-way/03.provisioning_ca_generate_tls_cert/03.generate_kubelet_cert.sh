@@ -1,6 +1,7 @@
 #!/bin/bash
 
-for instance in node0 node1 node2; do
+#for instance in node0 node1 node2; do
+for instance in k8s-master k8s-worker1 k8s-worker2; do
 cat > ${instance}-csr.json <<EOF
 {
   "CN": "system:node:${instance}",
@@ -35,6 +36,7 @@ cfssl gencert \
 done
 
 
-mv node* ../pki
-
-ls -al ../pki/node*
+#mv node* ../pki
+mv k8s-* ../pki
+#ls -al ../pki/node*
+ls -al ../pki/k8s-*

@@ -2,7 +2,8 @@
 
 KUBERNETES_PUBLIC_ADDRESS=10.0.3.2
 
-for instance in node0 node1 node2; do
+#for instance in node0 node1 node2; do
+for instance in k8s-master k8s-worker1 k8s-worker2; do
   kubectl config set-cluster kubernetes-the-hard-way \
     --certificate-authority=../pki/ca.pem \
     --embed-certs=true \

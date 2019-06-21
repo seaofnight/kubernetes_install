@@ -16,7 +16,8 @@ resources:
       - identity: {}
 EOF
 
-for instance in node0; do
+#for instance in node0; do
+for instance in k8s-master; do
   scp encryption-config.yaml ${instance}:~/
 done
 
