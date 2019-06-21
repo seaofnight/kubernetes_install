@@ -1,0 +1,68 @@
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: helloworld-0
+  labels:
+   postnum: "0"
+   app: helloworld
+spec:
+  selector:
+    matchLabels:
+      app: helloworld
+      postnum: "0"
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: helloworld
+        postnum: "0"
+    spec:
+      containers:
+      - name: helloworld
+        image: docker.io/seaofnight/flask-sample:0.1
+        ports:
+        - containerPort: 5000
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: helloworld-1
+  labels:
+   postnum: "1"
+   app: helloworld
+spec:
+  selector:
+    matchLabels:
+      app: helloworld
+      postnum: "1"
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: helloworld
+        postnum: "1"
+    spec:
+      containers:
+      - name: helloworld
+        image: docker.io/seaofnight/flask-sample:0.1
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: helloworld
+  name: helloworld
+  namespace: default
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: helloworld
+  sessionAffinity: ClientIP
+  type: ClusterIP
+---
