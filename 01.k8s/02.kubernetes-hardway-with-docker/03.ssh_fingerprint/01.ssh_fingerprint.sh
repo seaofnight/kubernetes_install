@@ -4,13 +4,11 @@ function generate_tmp_file_by_inventory(){
 
  FILE=../01.create_inventory/*.conf
 
- for f in $FILE; do
-  cat $f >> ./hosts
- done
+ for f in $FILE; do 
+  cat $f >> host 
+ done;
 
- cat ./hosts
-
- cat ./hosts | sort -u > ./hosts
+ cat host | sort | uniq | tee hosts && rm -rf host
 
 }
 
@@ -44,10 +42,11 @@ function remove_tmp_files(){
 
 main(){
 
- generate_tmp_file_by_inventory && \
- append_hosts_info && \
- generate_ssh_key && \
- deploy_ssh_key_all_nodes
+# generate_tmp_file_by_inventory && \
+# append_hosts_info && \
+# generate_ssh_key && \
+ deploy_ssh_key_all_nodes && \
+ remove_tmp_files
 
 }
 
