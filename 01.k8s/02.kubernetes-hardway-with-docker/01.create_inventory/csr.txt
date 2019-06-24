@@ -1,16 +1,16 @@
 {
-  "CN": "${CN}",
+  "CN": "__CN__",
   "key": {
     "algo": "rsa",
     "size": 2048
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
-      "O": "system:masters",
+      "C": "KO",
+      "L": "Gangnam",
+      "O": "__O__",
       "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "ST": "GNGC"
     }
   ]
 }
