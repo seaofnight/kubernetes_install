@@ -10,7 +10,9 @@ sed -i 's/#kube_read_only_port: 10255/kube_read_only_port: 10255/' kubespray/inv
 
 # external ip setting, 외부에서 kubelet에서 요총을 받을 호스트를 설정해준다. 
 # 현재는 di07-03,4,5 설정, 하려했는데 뭔가 수정이 안됬음
-sed -i 's/# supplementary_addresses_in_ssl_keys: [10.0.0.1, 10.0.0.2, 10.0.0.3]/ supplementary_addresses_in_ssl_keys: [219.250.188.74,219.250.188.73,219.250.188.53]/' kubespray/inventory/mycluster/group_vars/k8s-cluster/k8s-cluster.yml
+if !(grep -q '219.250.188.74,219.250.188.73,219.250.188.53' kubespray/inventory/mycluster/group_vars/k8s-cluster/k8s-cluster.yml) ;  then 
+ echo -e "supplementary_addresses_in_ssl_keys: [219.250.188.74,219.250.188.73,219.250.188.53]" >> kubespray/inventory/mycluster/group_vars/k8s-cluster/k8s-cluster.yml
+fi
 
 # multius config change required
 sed -i 's/kube_network_plugin_multus: false/kube_network_plugin_multus: true/' kubespray/inventory/mycluster/group_vars/k8s-cluster/k8s-cluster.yml
