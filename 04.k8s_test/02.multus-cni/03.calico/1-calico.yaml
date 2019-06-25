@@ -1,0 +1,24 @@
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: 20-calico
+  namespace: kube-system
+spec:
+  config: '{
+      "cniVersion": "0.3.0",
+      "type": "calico",
+      "log_level": "info",
+      "datastore_type": "kubernetes",
+      "nodename": "test",
+      "mtu": 1440,
+      "ipam": {
+        "type": "host-local",
+        "subnet": "172.26.0.0/16"
+      },
+      "policy": {
+          "type": "k8s"
+      },
+      "kubernetes": {
+          "kubeconfig": "/etc/cni/multus/calico/net.d/calico-kubeconfig"
+      }
+    }'

@@ -2,20 +2,20 @@
 
 cat << EOF > kubespray/inventory/mycluster/hosts.ini
 [all]
-k8s-master1 ansible_host=10.0.3.2 ip=10.0.3.2 etcd_member_name=k8s-master1
-k8s-worker1 ansible_host=10.0.3.3 ip=10.0.3.3
-k8s-worker2 ansible_host=10.0.3.4 ip=10.0.3.4
+di7-03 ansible_host=10.20.30.12 ip=10.20.30.12 etcd_member_name=di7-03
+di7-04 ansible_host=10.20.30.13 ip=10.20.30.13
+di7-05 ansible_host=10.20.30.14 ip=10.20.30.14
 
 [kube-master]
-k8s-master1 
+di7-03 
 
 [kube-node]
-k8s-master1 
-k8s-worker1
-k8s-worker2
+di7-03 
+di7-04
+di7-05
 
 [etcd]
-k8s-master1 
+di7-03 
 
 [k8s-cluster:children]
 kube-node
