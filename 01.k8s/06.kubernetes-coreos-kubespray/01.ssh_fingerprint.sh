@@ -1,12 +1,15 @@
 #!/bin/bash
 
+PASSWD=core
+BECAME=core
+
 function append_hosts_info(){
 cat << EOF >> /etc/hosts
 
 # kubernetes nodes
-10.0.3.2 k8s-master1
-10.0.3.3 k8s-worker1
-10.0.3.4 k8s-worker2
+172.17.8.101 core-01
+172.17.8.102 core-02
+172.17.8.103 core-03
 
 EOF
 }
@@ -20,9 +23,9 @@ function generate_ssh_key(){
 
 function deploy_ssh_key_all_nodes(){
 
- for i in $(cat /etc/hosts | tail -n 3 | awk '{print $2}') ; do
+ for i in $(cat /etc/hosts | grep core | awk '{print $2}') ; do
   ssh-keyscan -t rsa "$i" >> ~/.ssh/known_hosts
-  sshpass -p "vagrant" ssh-copy-id -i /root/.ssh/id_rsa.pub root@"$i"
+  sshpass -p $PASSWD ssh-copy-id -i /root/.ssh/id_rsa.pub $BECAME@"$i"
   ssh "$i" hostname
  done
 
@@ -32,8 +35,8 @@ function deploy_ssh_key_all_nodes(){
 
 main(){
 
- append_hosts_info
- generate_ssh_key
+# append_hosts_info
+# generate_ssh_key
  deploy_ssh_key_all_nodes
 
 }
