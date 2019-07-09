@@ -9,3 +9,7 @@ cd /opt
 
 wget http://downloads.activestate.com/ActivePython/releases/${VERSION}/${PACKAGE}.tar.gz
 tar -xzvf ${PACKAGE}.tar.gz
+
+cd  ${PACKAGE}
+./install.sh -I /opt/bin
+export PATH=/opt/bin/bin:$PATH
