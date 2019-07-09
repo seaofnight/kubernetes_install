@@ -9,7 +9,7 @@ cd kubespray
 
 /opt/bin/bin/pip install jinja2 --upgrade
 /opt/bin/bin/pip install -r requirements.txt
-
+#/opt/bin/bin/pip install cryptography --upgrade
 
 cp -r inventory/sample/ inventory/mycluster
 
